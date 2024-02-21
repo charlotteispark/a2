@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title>Vis & Society Assignment 2</title>
+	<link rel="stylesheet" href="https://vis-society.github.io/assignments/report.css" />
+</head>
+
+<body>
+	<header>
+		<h1>
+			<small>Assignment 2</small>
+			Exploratory Data Analysis
+		</h1>
+
+		<p>
+			<strong>Charlotte Park</strong> — <em>cispark@mit.edu</em>
+		</p>
+	</header>
+	<main>
+		<section>
+			<h2>Subtheme: Housing for the Rich</h2>
+
+			<h3>Dataset</h3>
+			<p>
+				Following the class website, this dataset includes “all residential sales transactions in the City of Boston between 2000-2023”. There is information is various information about units, current and past prices, buyers, and whether or not any party in the transaction intends to flip or has flipped the property. There are nearly 50000 entries in the dataset, though some denote the sale of multiple units in a single transaction so there are even more total unit sales.
+			</p>
+
+			<h3>Initial Analysis Questions</h3>
+			<ol>
+			  <li>How unique is the problem of rich buying condos as second/third homes or investments to Boston and how has this changed over time?</li>
+			  <li>How can we quantify the value of “opportunity” (i.e. jobs, property taxes) for lower/middle class?</li>
+			  <li>What factors caused Boston to become a “mecca for global investors in luxury real estate”?</li>
+			  <li>What percentage of Bostonians who qualify for affordable housing are the 8000 new affordable units serving?</li>
+			  <li>How has demand for housing evolved over time in Boston and how is this different from other major cities</li>
+			  <li>What effect have policies previously implemented to prevent non-investing buyers had?</li>
+			  <li>Where in Boston is the buying and selling of flipped properties occurring most frequently?</li>
+			  <li>How much does flipping “improve” the quality of a property?</span></li>
+			</ol>
+
+			<p>
+				The motivation for the overarching questions comes from the Boston Globe Article and MAPC Report linked on the class website. Specifically, the motivations are:
+			</p>
+
+			<ol>
+			  <li>The Boston Globe article talks a lot about the fact that many luxury units in Boston sit empty most of the time but fails to provide reasons as to why. I would imagine that this is a problem in many major cities, but the article fails to contextualize it despite the prevalence of a national housing crisis.</li>
+			  <li>The argument that luxury properties or just generally luxury endeavors provide jobs is often given. It is specifically given in the Boston Globe article by developers of properties like 30 Dalton. I want to understand how much merit this holds.</li>
+			  <li>This is related to the first question – something mentioned in the Boston Globe article that is not further explained beyond this sentence. I would like to better understand how Boston got to be in this situation, as understanding the factors helps us to better figure out a solution.</li>
+			  <li>The Boston Globe Article repeatedly mentions how hard it is to get affordable housing and their interview with Denise Delgado helps dispel the myth that affordable housing is handed to you. The article provides these statistics on the number of new units, and I would like to understand just how small a percentage of people who would benefit from these units serve. Within this, I also want to better understand who qualifies for this type of housing.</li>
+			  <li>The MAPC report focuses on the impact of investors on the Boston housing market but only states that Boston is attractive to them because of “lack of supply and relatively inelastic demand for housing”. I would like to understand and contextualize exactly how inelastic demand is.</li>
+			  <li>The MAPC report helpfully lists policy recommendations and bills active in the current legislative session. However, it does not talk much about what was tried in the past and what affect such attempts have had, which would help us better understand the impact these current bills and policies may make.</li>
+			  <li>The MAPC report presents several visuals about the prevalence of flipping over time as well as by different types of properties. However, I believe more could be said about which urban areas, especially given that our dataset only considers Boston, flipping is most prevalent in. I am curious to see if some of these areas include those mentioned in the Boston Globe article where new affordable housing complexes are cropping up.</li>
+			  <li>The MAPC report spends a good amount of time talking about the costs and price differentials of flipped properties. It is my hope to better understand exactly how investors can market the building as being “improved” to jack up prices</li>
+			</ol>
+
+
+			<h3>Overall Analysis Questions</h3>
+			<p>
+				However, after looking the dataset itself, I realized that many of the questions could not be answered solely from the sales data provided. This then caused me to refine my list of questions ones which would have the potential to be answered from the data, resulting in the following questions:
+			</p>
+
+			<ol>
+				<li>How has the problem of property flipping changed over time?</li>
+				<li>Where in Boston is the buying and selling of flipped properties occurring most frequently? </</li>
+				<li>How much does flipping “improve” the quality of a property?</li>
+			</ol>
+
+			<p>
+				As this is a refined version of the previous list of questions, the motivations remain the same.
+			</p>
+		</section>
+
+		<section>
+			<h2>Discoveries & Insights</h2>
+
+			<p>
+				Our analysis began with an exploration of the data, in order to assess the general shape of the data as well as quality issues.
+			</p>
+			<p>
+				Before attempting to create any visuals, the data was examined in its raw form to see if there were any glaring issues with its current form. From this early analysis, it was noticed the way units were denoted in street addresses could vary widely. Some addresses contained dashes either within the street address itself or after the address in the unit number. It was assumed that these types of addresses denoted a single unit or building. However, some entries as some would list street addresses that ended with unit numbers of the form “1&2”. It was assumed that these addresses were indicating the sale of multiple units. Data detailing the sale of multiple units was removed so that all entries represented the transaction of a single unit.
+			</p>
+
+
+			<figure>
+				<img src="./Visuals/Average-Price-by-Zip-Code.png" style="width:100%" alt="" />
+				<figcaption>
+				This plot depicts average price by zip code. We see here that the average prices of properties range from under $200,000 to over $7,000,000, with the most expensive properties being in areas such as Beacon Hill, Downtown/Financial District, Seaport, and Harvard Square. Some of the less expensive areas include the Southern parts of Boston.
+			</figure>
+
+			<p>
+				The above visual also features data from the 02190 zip code, which is indicated as being in Weymouth rather than the city of Boston. This indicates that there may be some issues in terms of the data having a consistent definition of what constitutes Boston. Given that the physical distance of the 02190 zip code from the others and its different city classification, it has been excluded from all subsequent analysis for clarity.
+			</p>
+
+			<p>
+				Once we had an overall sense of the data’s shape, we moved into answering the revised questions posed earlier.
+			</p>
+
+			<figure>
+				<img src="./Visuals/Number-of-Buyers-With-and-Without-Intent.png" style="width:100%" alt="" />
+				<figcaption>
+					This visual depicts the number of transactions over time, where the light blue line at the top represents purchases made by buyers who do not intend to flip and the dark blue line at the bottom indicates purchases made by buyers who do indent to flip the property. We can see that following the 2008 recession, there has been an increase in the number of properties purchased for flipping. However, the number of properties purchased without an intent to flip does not display as clear a trend after 2009, with an increase until about 2013 followed by a decrease and then a dip in 2020. The number of flipped properties has been decreasing slightly post-2020, while the market for properties that are not flipped has been increasing slightly.
+				</figcaption>
+			</figure>
+
+			<p>
+				It is hard to know exactly how accurate the flipping numbers are for more recent years, as a sufficiently long horizon for flips is still yet to pass. For this reason, data from 2022 was omitted and data from 2021 should be examined critically.  As a whole, however, it appears that flipping has become significantly more popular after the 2008 recession compared to before. Though the number of flipped properties may be decreasing, it does not appear to be returning to pre-2008 levels.
+			</p>
+
+			<figure>
+				<img src="./Visuals/Investor-to-Investor.png" style="width:100%" alt="" />
+				<figcaption>
+				This visual depicts the number of investor to investor purchases over time. While there is quite a bit of yearly variation, we can see that the number of investor to investor purchases has been trending upwards. The largest downward spikes occur at moments of economic recession, such as 2008 or 2020.
+				</figcaption>
+			</figure>
+
+			<p>
+				After attempting to answer the question about how the problem of property flipping has changed over time, we were then interested to understand how the general demand for housing has changed over time. We posed the follow up question:
+			</p>
+			<ul>
+				<li>How has demand has demand for housing evolved over time in Boston?</li>
+			</ul>
+
+			<figure>
+				<img src="./Visuals/Sales-Over-Time.png" style="width:100%" alt="" />
+				<figcaption>
+				This plot depicts the number of total transactions over the time period examined from 2000 to 2022. The shape of this trend line is similar to the trend line in the previous graphic representing the number of buyers without intent to flip over time. This indicates that (a) the number of flips is not currently significant enough to influence the overall trend of sales and (b) that the number of flips is not simply occurring as a result of a general increase in sales.
+				</figcaption>
+			</figure>
+
+			<p>
+				To understand this trend of sales at a more granular level, we then examined how sales vary by zip code.
+			</p>
+
+			<figure>
+				<img src="./Visuals/Total-Sales-by-Zip-Code.png" style="width:100%" alt="" />
+				<figcaption>
+				This visual depicts the total number of property sales by zip code across the entire time period. We can see that areas of Boston such as Back Bay, Fenway, and the South End have had considerably more transactions than other areas. Perhaps unsurprisingly, areas in the South of Boston, which we saw had the lowest average price in an earlier visual, have experienced the fewest number of sales transactions.
+				</figcaption>
+			</figure>
+
+			<p>
+				It should be noted that this visual is intended to be interactive: if one hovers the mouse over a specific part of the map, information such as the following is displayed:
+			</p>
+
+			<figure>
+				<img src="./Visuals/Zip-Code-Zoomed.png" style="width:100%" alt="" />
+			</figure>
+
+			<p>
+				After feeling like we have gained a satisfactory understanding from the data of how the problem of property flipping has changed over time, we move onto trying to answer the second overarching question and understand where in Boston flipping is occurring.
+			</p>
+
+			<figure>
+				<img src="./Visuals/Flips-Zip-Codes.png" style="width:100%" alt="" />
+				<figcaption>
+				This visual depicts the number of buy side flip transactions over time across different zip codes. We can see that before 2008, when very little flipping was occurring, the zip codes 02114, 02116, and 02118 had the most flip purchases. This corresponds to the areas of the West End, Back Bay, and the South End. As noted before, the number of flips skyrocketed as we move out of the 2008 recession. In the last decade or so, zip codes such as 02118 and 02116 continue to have many the total flips. However, areas such as Fenway (02115), Seaport (02108) have also turned into areas with consistently larger number of flips.
+				</figcaption>
+			</figure>
+
+			<p>
+				As before, the graphic above is intended to be interactive. This makes the complicated legend easier to read, as when a user hovers their mouse over a certain area of the histogram they would see the following:
+			</p>
+
+			<figure>
+				<img src="./Visuals/Flips-Zip-Codes-Zoomed.png" style="width:100%" alt="" />
+			</figure>
+
+			<p>
+				With this information on which zip codes flips are most likely to occur in, we wanted to better understand how likely a property was to be flipped depending on its location. We thus posed the follow up question:
+			</p>
+			<ul>
+			   <li>Does the likelihood of a property being flipped vary by zip code?</li>
+			</ul>
+
+			<figure>
+				<img src="./Visuals/Percent-Flip-Zip-Codes.png" style="width:100%" alt="" />
+				<figcaption>
+				The above visual depicts the percentage of total purchases in each zip code that are buy side flips. The percentage of total purchases from 2000-2023 that are flips in any given zip code never exceeds 5%. Moreover, we can see those areas such as Back Bay, Fenway, Seaport, Beacon Hill, and the South End have the highest percentage of their total purchases result in flips. Thus, in relation to the previous visual, we cannot say the higher number of flips in those areas are simply the result of a higher volume of total transactions.
+				</figcaption>
+			</figure>
+
+			<p>
+				From this, we wanted to better understand why certain zip codes are favored over others. We were specifically hoping to look to the presence of different types of buildings in different areas as a potential for explaining these trends. Hence, we posed the follow up question:
+			</p>
+			<ul>
+				<li>Why are certain zip codes favored over others?</li>
+			</ul>
+
+
+			<figure>
+				<img src="./Visuals/Flips-Property-Type.png" style="width:100%" alt="" />
+				<figcaption>
+				This visual depicts the total number of buyer side flips by different types of properties. Unfortunately, we could not easily find a list of what various property codes corresponded to, so the following analysis is our best impression of that. It appears residential condominiums are by far the most popular type of property to flip. There are over 5 times the number of condominiums flipped compared to residential 1 family homes, the next most common type of flipped property. It would have been helpful for better interpretability of the data if the property codes had been included.
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="./Visuals/Percent-Property-Type.png" style="width:100%" alt="" />
+				<figcaption>
+				This visual depicts the percentage of sales in each zip code that are of each property type. Residential condominiums, the most common property type to be flipped, are the most common property type in almost every zip code. This is not wholly unsurprising given that Boston is an urban area, with fewer 1, 2, or 3 family homes compared to more suburban areas. 02201, 02139, and 02136 all have the fewest number of RCD properties, perhaps explaining in part why flips are not as prevalent in these areas.
+				</figcaption>
+			</figure>
+
+			<p>
+				The biggest takeaway from the following two visuals is that, while absence of particular property types may lead to fewer flips, presence of these popular property types alone does not explain the number of flips in each area. Ultimately, to answer the question of why certain zip codes are favored over others, we must consider other factors.
+			</p>
+			<p>
+				We now move into answering our last overarching question, aiming to understand how much flipping “improves” the quality of a property.
+			</p>
+
+			<figure>
+				<img src="./Visuals/Flip-Amenities.png" style="width:50%" alt="" /><img src="./Visuals/Non-Flip-Amenities.png" style="width:50%" alt="" />
+				<figcaption>
+				The following visual depicts the distribution of the number of amenities in properties sold from 2000-2023. The left side shows the percentage of flipped properties with different numbers of amenities and the right side shows the percentage of non-flipped properties with different numbers of amenities. Amenities are classified as added features of properties such as porches, swimming pools, or septic systems. Generally, we can use the number of amenities as a proxy for how nice a property is. We can see that distribution of the number of amenities is quite similar for flipped properties and properties that are not flipped. Though there are a slightly larger number of flipped properties have more amenities, it is not significant enough to explain how flipping a property would increase its value.
+				</figcaption>
+			</figure>
+
+		<p>
+			Moreover, it should be noted that examining the data directly, it seems as though amenities were never added during flips. Combining this with above implies that “nicer” buildings were more likely to be flipped rather than implying that flipping a property makes it nicer.
+		</p>
+
+		<figure>
+			<img src="./Visuals/Amenities-Vs-Price.png" style="width:50%" alt="" />
+			<figcaption>
+			This visual compares the number of amenities to the average price differential for different flipped properties. Again, using amenity number as a proxy for niceness of a property, we can see that nicer properties have a larger price differential when flipped. We can also see that there is not a huge difference in average price differential for buildings with 0 vs 1 amenities compared to those with higher numbers. When taken in context with the previous visuals, this means that for most flipped properties, amenity number does not explain prices differential, as 95% of flipped properties have 0 or 1 amenities.
+			</figcaption>
+		</figure>
+	</section>
+
+		<section>
+			<h2>Summary</h2>
+
+			<p>From this analysis, we see that property flipping is a recent phenomenon in Boston, with the problem getting worse after the 2008 Financial Crisis despite relatively inelastic demand for housing. Moreover, we can conclude that location very much affects how likely a property is to be flipped, with more expensive locations having a higher percentage of flips compared to other areas. It appears factors besides building type and amenities of a property affect a building’s chances of being flipped, as location and cost are the only stand out factors here affecting changes of a purchase resulting a flip. A dataset containing more information about individual properties would be interesting to examine, as it might lend more insight as to what factors affect a building’s cost and how properties vary across zip codes. </p>
+		</section>
+	</main>
+</body>
+</html>
